@@ -10,6 +10,7 @@ function TeacherDashBoard() {
     <div>
       <Link to="/student-details">Students</Link>
       <Link to="/my-details">My Details</Link>
+      <Link to="/teacher-prediction">Predict Class Overview</Link>
       {role === "admin" && <Link to="/teacher-details">Teachers</Link>}
       {token && (
         <Form method="post" action="/logout">
