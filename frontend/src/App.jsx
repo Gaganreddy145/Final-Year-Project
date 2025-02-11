@@ -35,7 +35,8 @@ import MyMidMarksSpecificYear from "./routes/MyMidMarksSpecificYear";
 import StudentPrediction, {
   action as studentPredictionAction,
 } from "./routes/StudentPrediction";
-import ClassOverviewPrediction from "./routes/ClassOverviewPrediction";
+import ClassOverviewPrediction,{action as classPredictionAction} from "./routes/ClassOverviewPrediction";
+import ErrorPage from "./components/ErrorPage";
 
 function App() {
   const router = createBrowserRouter([
@@ -48,6 +49,7 @@ function App() {
     {
       path: "/",
       element: <RootLayout />,
+      errorElement:<ErrorPage />,
       id: "root",
       loader: getToken,
       children: [
@@ -115,7 +117,8 @@ function App() {
         },
         {
           path:"teacher-predict",
-          element:<ClassOverviewPrediction />
+          element:<ClassOverviewPrediction />,
+          action:classPredictionAction
         },
         {
           path: "logout",

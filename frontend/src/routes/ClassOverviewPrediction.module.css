@@ -1,0 +1,126 @@
+:root {
+  --primary-color: #1976d2;
+  --secondary-color: #f5f5f5;
+  --text-color: #333;
+  --button-hover: #115293;
+  --good-color: #4caf50;
+  --good-hover: #66bb6a;
+  --medium-color: #ff9800;
+  --medium-hover: #ffb74d;
+  --low-color: #f44336;
+  --low-hover: #e57373;
+}
+
+.classOverviewContainer {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: "Arial", sans-serif;
+  color: var(--text-color);
+  background-color: #fff;
+}
+
+.classOverviewTitle {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: var(--primary-color);
+}
+
+.predictionForm {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  gap: 20px;
+  background-color: var(--secondary-color);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.predictionForm label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.predictionForm select,
+.predictionForm input[type="submit"] {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.predictionForm input[type="submit"] {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.predictionForm input[type="submit"]:hover {
+  background-color: var(--button-hover);
+}
+
+.chartContainer {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.chartContainer h2 {
+  margin-bottom: 20px;
+  color: var(--primary-color);
+}
+
+/* Table Styling */
+.tableContainer {
+  margin-top: 40px;
+}
+
+.tableContainer h2 {
+  text-align: center;
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+.resultsTable {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.resultsTable thead {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.resultsTable thead tr th {
+  padding: 12px 15px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+.resultsTable tbody tr {
+  border-bottom: 1px solid #ddd;
+}
+
+.resultsTable tbody tr:nth-child(even) {
+  background-color: var(--secondary-color);
+}
+
+.resultsTable tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+.resultsTable tbody tr td {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+}

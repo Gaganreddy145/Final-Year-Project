@@ -364,7 +364,7 @@ exports.postClassPrediction = catchAsync(async (req, res, next) => {
     const { semgrade, attendance, currentSem, year, rollno } = student;
     let semester = (year - 1) * 2 + currentSem;
     // (Optional) Adjust semester if needed.
-    semester === 1 ? 1 : 2;
+    semester = semester === 1 ? 1 : 2;
     const avgSemGrade = calculateAverage(semgrade);
     const avgAttendance = calculateAverage(attendance);
 
@@ -410,8 +410,8 @@ exports.postClassPrediction = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: 'success',
     data: {
-      results:result.results,
-      summary:result.summary
+      results: result.results,
+      summary: result.summary,
     },
   });
 });
