@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Student Performance Prediction</title>
+  </head>
+  <body>
+    <h1>Enter Student Details</h1>
+    <form action="/predict_student" method="post">
+      <label for="semester">Semester:</label>
+      <input type="text" id="semester" name="semester" required /><br /><br />
+
+      <!-- For first-semester, expected fields: high_school_marks, entrance_exam_score, etc. -->
+      <label for="high_school_marks">High School Marks:</label>
+      <input
+        type="text"
+        id="high_school_marks"
+        name="high_school_marks"
+        required
+      /><br /><br />
+
+      <label for="entrance_exam_score">Entrance Exam Score:</label>
+      <input
+        type="text"
+        id="entrance_exam_score"
+        name="entrance_exam_score"
+        required
+      /><br /><br />
+
+      <label for="parent_edu"
+        >Parent Education (1=Graduate, 0=High School):</label
+      >
+      <input
+        type="text"
+        id="parent_edu"
+        name="parent_edu"
+        required
+      /><br /><br />
+
+      <label for="study_hours">Study Hours:</label>
+      <input
+        type="text"
+        id="study_hours"
+        name="study_hours"
+        required
+      /><br /><br />
+
+      <label for="internet_access">Internet Access (1 or 0):</label>
+      <input
+        type="text"
+        id="internet_access"
+        name="internet_access"
+        required
+      /><br /><br />
+
+      <label for="sleep_hours">Sleep Hours:</label>
+      <input
+        type="text"
+        id="sleep_hours"
+        name="sleep_hours"
+        required
+      /><br /><br />
+
+      <label for="extra_curricular">Extra Curricular (1 or 0):</label>
+      <input
+        type="text"
+        id="extra_curricular"
+        name="extra_curricular"
+        required
+      /><br /><br />
+
+      <label for="attendance">Attendance:</label>
+      <input
+        type="text"
+        id="attendance"
+        name="attendance"
+        required
+      /><br /><br />
+
+      <label for="assignment_score">Assignment Score:</label>
+      <input
+        type="text"
+        id="assignment_score"
+        name="assignment_score"
+        required
+      /><br /><br />
+
+      <label for="quiz_score">Quiz Score:</label>
+      <input
+        type="text"
+        id="quiz_score"
+        name="quiz_score"
+        required
+      /><br /><br />
+
+      <label for="mid_sem_marks">Mid-Semester Marks:</label>
+      <input
+        type="text"
+        id="mid_sem_marks"
+        name="mid_sem_marks"
+        required
+      /><br /><br />
+
+      <label for="lab_performance">Lab Performance:</label>
+      <input
+        type="text"
+        id="lab_performance"
+        name="lab_performance"
+        required
+      /><br /><br />
+
+      <label for="backlogs">Backlogs:</label>
+      <input type="text" id="backlogs" name="backlogs" required /><br /><br />
+
+      <!-- For semester > 1, include the previous semester grade -->
+      <label for="prev_sem_grade"
+        >Previous Semester Grade (if applicable):</label
+      >
+      <input
+        type="text"
+        id="prev_sem_grade"
+        name="prev_sem_grade"
+      /><br /><br />
+
+      <input type="submit" value="Predict" />
+    </form>
+
+    {% if prediction %}
+    <h2>Prediction Result</h2>
+    <p>{{ prediction|safe }}</p>
+    {% endif %}
+  </body>
+</html>

@@ -1,0 +1,95 @@
+[{
+  "_id": {
+    "$oid": "679b89c54be654c593a8f486"
+  },
+  "name": "Admin",
+  "role": "admin",
+  "email": "admin@example.com",
+  "password": "$2a$10$VTS0wOMOkmM6eG9M6rknQuUB0u7uu6Itv7FwCVYMgcAyL3H/iWf6u",
+  "__v": 0,
+  "phno": "8074362340"
+},
+{
+  "_id": {
+    "$oid": "679b8b0f4be654c593a8f48f"
+  },
+  "name": "Brahmi",
+  "role": "teacher",
+  "email": "brahmi@example.com",
+  "password": "$2a$10$SaBFLbJ/6ck6pxCtv7n6xOSDoQI.UdwdR0nToM0TTWPtSftrVggsS",
+  "__v": 0,
+  "experience": 2,
+  "qualification": "M.tech",
+  "subjects": [
+    "ML",
+    "AI"
+  ],
+  "classesAssigned": [
+    {
+      "year": 3,
+      "section": "A"
+    },
+    {
+      "year": 4,
+      "section": "B"
+    }
+  ],
+  "phno": "9396886556"
+},
+{
+  "_id": {
+    "$oid": "679b8b1d4be654c593a8f491"
+  },
+  "name": "Donkey",
+  "role": "teacher",
+  "email": "don@example.com",
+  "password": "$2a$10$jLgM/z.MHY/KDgoQYJRIXeW6t93dmQw7N2pckNGOMUYm.0IB6DHYa",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "679e32d9d9b1a62e264dd321"
+  },
+  "name": "Tao",
+  "phno": "9999999999",
+  "role": "teacher",
+  "designation": "B.Tech",
+  "email": "tao@example.com",
+  "password": "$2a$10$Yoix9PejMhq/nxmgQ78buOOzR9nig6k/A76Ubsb2gGc3MISWcuOD.",
+  "qualification": "Ph.D, M.Tech",
+  "experience": 3,
+  "subjects": [
+    "C",
+    "Java"
+  ],
+  "classesAssigned": [
+    {
+      "year": 1,
+      "section": "A",
+      "_id": {
+        "$oid": "679e32d9d9b1a62e264dd322"
+      }
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "679e3611d9b1a62e264dd33c"
+  },
+  "name": "YAMALA MADHAVILATHA",
+  "role": "teacher",
+  "email": "madhu@gmail.com",
+  "password": "$2a$10$LWDcbwAOMFQwiJVhNbr5IOrMunnJ7Wf8zcijfW0SlGkbYkGYTjwcm",
+  "subjects": [],
+  "classesAssigned": [
+    {
+      "year": 1,
+      "section": "A",
+      "_id": {
+        "$oid": "679e3611d9b1a62e264dd33d"
+      }
+    }
+  ],
+  "__v": 0
+}]

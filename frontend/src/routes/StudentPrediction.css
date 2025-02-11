@@ -1,0 +1,96 @@
+/* Container styling */
+.student-prediction-container {
+    max-width: 650px;
+    margin: 50px auto;
+    background: linear-gradient(135deg, #ffffff, #f0f4ff);
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  /* Header styling */
+  .student-prediction-container h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+    font-size: 2rem;
+    font-weight: 600;
+  }
+  
+  /* Result container styling */
+  .result-container {
+    background-color: #e6f7ff;
+    border: 1px solid #b3e5fc;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .result-container h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #007bff;
+  }
+  
+  .result-container h4 {
+    margin: 5px 0 0 0;
+    font-size: 1.2rem;
+    color: #28a745;
+  }
+  
+  /* Form styling */
+  .prediction-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Grouping each label and input */
+  .prediction-form .form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Label styling */
+  .prediction-form .form-group label {
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #555;
+    font-size: 1rem;
+  }
+  
+  /* Input and select styling */
+  .prediction-form .form-group input[type="number"],
+  .prediction-form .form-group select {
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    transition: border-color 0.3s ease;
+  }
+  
+  .prediction-form .form-group input[type="number"]:focus,
+  .prediction-form .form-group select:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  /* Submit button styling */
+  .prediction-form .submit-btn {
+    background: #007bff;
+    color: #fff;
+    border: none;
+    padding: 14px;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 10px;
+  }
+  
+  .prediction-form .submit-btn:hover {
+    background: #0056b3;
+  }
+  

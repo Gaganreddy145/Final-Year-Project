@@ -1,0 +1,151 @@
+/* Overall container styling */
+.mydetails-container {
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Card styling */
+.profile-card {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 900px;
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* Profile photo section */
+.profile-photo {
+  flex: 1 1 300px;
+  min-width: 300px;
+  background-color: #007bff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.profile-photo img {
+  border-radius: 50%;
+  width: 220px;
+  height: 220px;
+  object-fit: cover;
+  border: 5px solid #ffffff;
+}
+
+/* Profile info section */
+.profile-info {
+  flex: 2 1 400px;
+  padding: 40px 30px;
+  background-color: #ffffff;
+  color: #343a40;
+}
+
+.profile-info .name {
+  margin-top: 0;
+  font-size: 32px;
+  color: #212529;
+  margin-bottom: 20px;
+}
+
+.profile-info p {
+  font-size: 18px;
+  color: #495057;
+  margin: 12px 0;
+  line-height: 1.6;
+}
+
+.profile-info strong {
+  color: #343a40;
+}
+
+/* Input field styling */
+.profile-info input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-info input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+  outline: none;
+}
+
+/* Error message styling */
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+  font-weight: bold;
+}
+
+/* Styled buttons */
+button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  margin-top: 10px;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+/* Subjects and Classes lists */
+.profile-info ul {
+  list-style-type: disc;
+  margin: 10px 0 0 20px;
+  padding: 0;
+}
+
+.profile-info li {
+  font-size: 16px;
+  margin-bottom: 6px;
+  color: #495057;
+}
+
+/* Headings for sections */
+.profile-info > div > strong {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 20px;
+  color: #212529;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .profile-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .profile-photo,
+  .profile-info {
+    flex: 1 1 100%;
+    min-width: unset;
+  }
+
+  .profile-photo {
+    padding: 20px;
+  }
+
+  .profile-info {
+    padding: 20px;
+  }
+}

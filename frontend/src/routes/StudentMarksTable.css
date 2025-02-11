@@ -1,0 +1,93 @@
+.container {
+  max-width: 90%;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.marks-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.marks-table th,
+.marks-table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+.marks-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  color: #000;
+}
+
+.marks-table input {
+  width: 100%;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.btn {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.add-row {
+  background-color: #28a745;
+  color: white;
+}
+
+.add-column {
+  background-color: #007bff;
+  color: white;
+}
+
+.submit {
+  background-color: #dc3545;
+  color: white;
+  display: block;
+  margin: 20px auto;
+}
+
+.exam-number {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.exam-number label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.exam-number input {
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 200px;
+}

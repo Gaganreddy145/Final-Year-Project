@@ -1,0 +1,135 @@
+/* Overall container styling */
+.student-container {
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Card layout */
+.student-card {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 850px;
+    width: 100%;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out;
+}
+
+.student-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Photo section */
+.student-photo {
+    flex: 1 1 250px;
+    min-width: 250px;
+    background: #007bff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+}
+
+.student-photo img {
+    border-radius: 50%;
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border: 6px solid #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Details section */
+.student-details {
+    flex: 2 1 500px;
+    padding: 30px;
+    background-color: #ffffff;
+    color: #333;
+}
+
+.student-details h2 {
+    margin-top: 0;
+    font-size: 28px;
+    color: #212529;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.student-details p {
+    font-size: 18px;
+    color: #495057;
+    margin: 10px 0;
+    line-height: 1.6;
+}
+
+.student-details strong {
+    color: #212529;
+}
+
+/* Sections for grades, attendance, and mid exam marks */
+.student-grades,
+.student-attendance,
+.student-midmarks {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.student-grades h3,
+.student-attendance h3,
+.student-midmarks h3 {
+    margin-bottom: 10px;
+    font-size: 20px;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 5px;
+    color: #007bff;
+}
+
+/* Table styling for mid exam marks */
+.marks-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.marks-table th,
+.marks-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.marks-table th {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .student-card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .student-photo {
+        padding: 20px;
+    }
+
+    .student-details {
+        padding: 20px;
+    }
+}
