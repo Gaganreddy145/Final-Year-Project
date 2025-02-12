@@ -12,6 +12,7 @@ const {
   updateAttendances,
   postPrediction,
   postClassPrediction,
+  postEmail,
 } = require('./../controllers/studentController');
 
 const {
@@ -52,5 +53,7 @@ router.post(
   restrictTo('teacher'),
   postClassPrediction
 );
+
+router.post('/sendemail',postEmail);
 
 module.exports = router;

@@ -5,6 +5,7 @@ const AppError = require('./../utils/appError');
 // const Mid = require('../models/midMarksModel');
 const bcrypt = require('bcryptjs');
 const { getMeFactory } = require('../utils/handleFactory');
+const sendEmail = require('../utils/email');
 
 exports.getMe = getMeFactory(Student);
 
@@ -413,5 +414,41 @@ exports.postClassPrediction = catchAsync(async (req, res, next) => {
       results: result.results,
       summary: result.summary,
     },
+  });
+});
+
+exports.postEmail = catchAsync(async (req, res, next) => {
+  const performances = req.body.performances;
+  let formattedData = [];
+  for (const performance of performances) {
+    const student = await Student.findOne({
+      rollno: performance.rollno,
+    }).select('email');
+    if (!student)
+      return next(
+        new AppError(`No such student with rollno: ${performance.rollno}`, 404)
+      );
+    const addedData = { ...performance, email: student.email };
+    formattedData.push(addedData);
+  }
+  // console.log(formattedData);
+  for (const performance of formattedData) {
+    let { email, predicted_pass_fail, performance_category } = performance;
+    if (performance_category === 'Medium') performance_category = 'Average';
+    const message = `Dear Student, \n Your Overall Performance is ${performance_category}. \n You will be ${predicted_pass_fail}ed in the examination.`;
+    // console.log(performance);
+    try {
+      await sendEmail({
+        email,
+        subject: `Prediction results of Student Performance`,
+        message,
+      });
+    } catch (error) {
+      return next(new AppError('There is an error send emails', 500));
+    }
+  }
+
+  res.status(200).json({
+    status: 'success',
   });
 });

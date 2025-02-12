@@ -11,15 +11,17 @@
   --low-hover: #e57373;
 }
 
+/* Main Container */
 .classOverviewContainer {
-  max-width: 800px;
+  max-width: 1000px;
   margin: 0 auto;
   padding: 20px;
-  font-family: "Arial", sans-serif;
+  font-family: Arial, sans-serif;
   color: var(--text-color);
   background-color: #fff;
 }
 
+/* Title */
 .classOverviewTitle {
   text-align: center;
   font-size: 2rem;
@@ -27,22 +29,29 @@
   color: var(--primary-color);
 }
 
-.predictionForm {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  align-items: center;
-  gap: 20px;
+/* Form Container (fixed width) */
+.formContainer {
+  width: 80%;
+  margin: 0 auto;
   background-color: var(--secondary-color);
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* Prediction Form */
+.predictionForm {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Each Form Group */
 .formGroup {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  margin: 10px 0;
 }
 
 .predictionForm label {
@@ -58,9 +67,10 @@
   border-radius: 4px;
 }
 
+/* Predict Button */
 .predictionForm input[type="submit"] {
   background-color: var(--primary-color);
-  color: white;
+  color: #fff;
   border: none;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -70,27 +80,79 @@
   background-color: var(--button-hover);
 }
 
-.chartContainer {
-  margin-top: 40px;
+/* Charts Container (same width as form) */
+.chartsContainer {
+  width: 80%;
+  margin: 20px auto 0;
+  background-color: var(--secondary-color);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Charts Wrapper to hold both charts side by side */
+.chartsWrapper {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Each chart item */
+.chartItem {
+  flex: 1;
+  max-width: 300px;
   text-align: center;
 }
 
-.chartContainer h2 {
-  margin-bottom: 20px;
+.chartItem h2 {
+  margin-bottom: 10px;
+  font-size: 1.1rem;
   color: var(--primary-color);
 }
 
-/* Table Styling */
-.tableContainer {
-  margin-top: 40px;
+/* Chart Canvas: make the Pie chart fill the container */
+.chartCanvas {
+  width: 100%;
+  height: 250px;
 }
 
+/* Send Emails Button Container */
+.buttonContainer {
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Send Emails Button */
+.emailButton {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.emailButton:hover {
+  background-color: var(--button-hover);
+}
+
+/* Table Container */
+.tableContainer {
+  width: 80%;
+  margin: 20px auto;
+}
+
+/* Table Title */
 .tableContainer h2 {
   text-align: center;
   color: var(--primary-color);
   margin-bottom: 20px;
 }
 
+/* Results Table */
 .resultsTable {
   width: 100%;
   border-collapse: collapse;
@@ -99,7 +161,7 @@
 
 .resultsTable thead {
   background-color: var(--primary-color);
-  color: white;
+  color: #fff;
 }
 
 .resultsTable thead tr th {

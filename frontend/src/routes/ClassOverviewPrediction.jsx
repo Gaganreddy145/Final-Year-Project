@@ -1,5 +1,11 @@
-import React from "react";
-import { Form, json, redirect, useActionData } from "react-router-dom";
+import React, { useState } from "react";
+import {
+  Form,
+  json,
+  redirect,
+  useActionData,
+  useNavigate,
+} from "react-router-dom";
 import { getToken } from "../utils/tokenHandler";
 import { Pie } from "react-chartjs-2";
 import styles from "./ClassOverviewPrediction.module.css";
@@ -10,8 +16,10 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 function ClassOverviewPrediction() {
   const predictedData = useActionData();
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
-  // Prepare chart data if summary exists
+  // Prepare performance summary chart data if exists
   let chartData = null;
   if (
     predictedData &&
@@ -38,7 +46,7 @@ function ClassOverviewPrediction() {
     );
 
     chartData = {
-      labels: labels,
+      labels,
       datasets: [
         {
           data: dataCounts,
@@ -49,81 +57,167 @@ function ClassOverviewPrediction() {
     };
   }
 
+  // Calculate pass/fail counts and prepare corresponding chart data
+  let passAndFail = null;
+  if (predictedData && predictedData.data && predictedData.data.results) {
+    let passCount = 0;
+    let failCount = 0;
+    for (const performance of predictedData.data.results) {
+      if (performance.predicted_pass_fail === "Pass") passCount++;
+      else failCount++;
+    }
+    passAndFail = { pass: passCount, fail: failCount };
+  }
+
+  let passFailChartData = null;
+  if (passAndFail) {
+    passFailChartData = {
+      labels: ["Pass", "Fail"],
+      datasets: [
+        {
+          data: [passAndFail.pass, passAndFail.fail],
+          backgroundColor: ["#4caf50", "#f44336"],
+          hoverBackgroundColor: ["#66bb6a", "#e57373"],
+        },
+      ],
+    };
+  }
+
+  const handleEmails = async (studentPerformances) => {
+    const token = getToken();
+    if (!token) return navigate("/login");
+    setIsLoading(true);
+
+    try {
+      const response = await fetch(
+        "http://localhost:3000/api/students/sendemail",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ performances: studentPerformances }),
+        }
+      );
+
+      if (!response.ok) {
+        const result = await response.json();
+        throw new Error(result.message || "Something went wrong!!!");
+      }
+      await response.json();
+      setIsLoading(false);
+      alert("😁Emails send successfully😁");
+    } catch (error) {
+      setIsLoading(false);
+      alert(error.message);
+    }
+  };
+
   return (
     <div className={styles.classOverviewContainer}>
       <h1 className={styles.classOverviewTitle}>Class Overview Prediction</h1>
-      <Form method="POST" className={styles.predictionForm}>
-        <div className={styles.formGroup}>
-          <label htmlFor="year">Year:</label>
-          <select name="year" id="year" required>
-            <option value="">Select</option>
-            <option value="1">1st Year</option>
-            <option value="2">2nd Year</option>
-            <option value="3">3rd Year</option>
-            <option value="4">4th Year</option>
-          </select>
-        </div>
-        <div className={styles.formGroup}>
-          <label htmlFor="section">Section:</label>
-          <select name="section" id="section" required>
-            <option value="">Select</option>
-            <option value="A">A</option>
-            <option value="B">B</option>
-            <option value="C">C</option>
-          </select>
-        </div>
-        <div className={styles.formGroup}>
-          <input type="submit" value="Predict" />
-        </div>
-      </Form>
 
-      {/* Display the pie chart only if prediction data exists */}
-      {chartData && (
-        <div className={styles.chartContainer}>
-          <h2>Performance Summary</h2>
-          <Pie
-            data={chartData}
-            options={{
-              plugins: {
-                legend: {
-                  position: "bottom",
-                },
-              },
-            }}
-          />
+      {/* Form Container */}
+      <div className={styles.formContainer}>
+        <Form method="POST" className={styles.predictionForm}>
+          <div className={styles.formGroup}>
+            <label htmlFor="year">Year:</label>
+            <select name="year" id="year" required>
+              <option value="">Select</option>
+              <option value="1">1st Year</option>
+              <option value="2">2nd Year</option>
+              <option value="3">3rd Year</option>
+              <option value="4">4th Year</option>
+            </select>
+          </div>
+
+          <div className={styles.formGroup}>
+            <label htmlFor="section">Section:</label>
+            <select name="section" id="section" required>
+              <option value="">Select</option>
+              <option value="A">A</option>
+              <option value="B">B</option>
+              <option value="C">C</option>
+            </select>
+          </div>
+
+          <div className={styles.formGroup}>
+            <input type="submit" value="Predict" disabled={isLoading}/>
+          </div>
+        </Form>
+      </div>
+
+      {/* Charts Container (same width as the form) */}
+      {chartData && passFailChartData && (
+        <div className={styles.chartsContainer}>
+          <div className={styles.chartsWrapper}>
+            <div className={styles.chartItem}>
+              <h2>Performance Summary</h2>
+              <div className={styles.chartCanvas}>
+                <Pie
+                  data={chartData}
+                  options={{
+                    plugins: { legend: { position: "bottom" } },
+                    maintainAspectRatio: false,
+                  }}
+                />
+              </div>
+            </div>
+
+            <div className={styles.chartItem}>
+              <h2>Pass/Fail Summary</h2>
+              <div className={styles.chartCanvas}>
+                <Pie
+                  data={passFailChartData}
+                  options={{
+                    plugins: { legend: { position: "bottom" } },
+                    maintainAspectRatio: false,
+                  }}
+                />
+              </div>
+            </div>
+          </div>
         </div>
       )}
 
-      {/* Display the prediction results in a beautifully styled table */}
-      {predictedData &&
-        predictedData.data &&
-        predictedData.data.results && (
-          <div className={styles.tableContainer}>
-            <h2>Prediction Results</h2>
-            <table className={styles.resultsTable}>
-              <thead>
-                <tr>
-                  <th>Roll No</th>
-                  <th>Pass/Fail</th>
-                  <th>Category</th>
+      {/* Send Emails Button */}
+      {predictedData?.data?.results && (
+        <div className={styles.buttonContainer}>
+          <button
+            onClick={() => handleEmails(predictedData.data.results)}
+            disabled={isLoading}
+            className={styles.emailButton}
+          >
+            {isLoading ? "Sending..." : "Send Emails"}
+          </button>
+        </div>
+      )}
+
+      {/* Prediction Results Table */}
+      {predictedData?.data?.results && (
+        <div className={styles.tableContainer}>
+          <h2>Prediction Results</h2>
+          <table className={styles.resultsTable}>
+            <thead>
+              <tr>
+                <th>Roll No</th>
+                <th>Pass/Fail</th>
+                <th>Category</th>
+              </tr>
+            </thead>
+            <tbody>
+              {predictedData.data.results.map((res) => (
+                <tr key={res.rollno}>
+                  <td>{res.rollno}</td>
+                  <td>{res.predicted_pass_fail}</td>
+                  <td>{res.performance_category}</td>
                 </tr>
-              </thead>
-              <tbody>
-                {predictedData.data.results.map((res) => {
-                  const { rollno, performance_category, predicted_pass_fail } =
-                    res;
-                  return (
-                    <tr key={rollno}>
-                      <td>{rollno}</td>
-                      <td>{predicted_pass_fail}</td>
-                      <td>{performance_category}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        )}
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 }
