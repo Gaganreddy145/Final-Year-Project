@@ -6,6 +6,7 @@ const AppError = require('./../utils/appError');
 const bcrypt = require('bcryptjs');
 const { getMeFactory } = require('../utils/handleFactory');
 const sendEmail = require('../utils/email');
+const findSubject = require('../utils/matchSubject');
 
 exports.getMe = getMeFactory(Student);
 
@@ -450,5 +451,78 @@ exports.postEmail = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: 'success',
+  });
+});
+
+exports.getSubjectsLagPrediction = catchAsync(async (req, res, next) => {
+  const year = req.user.year;
+  const semno = req.user.currentSem;
+  const sid = req.user._id;
+
+  const fetchCurrentSemMarksPromise = await fetch(
+    `http://localhost:3000/api/marks?year=${year}&semno=${semno}&sid=${sid}`
+  );
+  if (!fetchCurrentSemMarksPromise.ok) {
+    return next(new AppError('Something went wrong'));
+  }
+  const fetchCurrentSemMarks = await fetchCurrentSemMarksPromise.json();
+  const subjectMarksCurrentSem = fetchCurrentSemMarks.data.midMarks;
+  if (subjectMarksCurrentSem.length === 0) {
+    return next(new AppError('No marks for current sem', 400));
+  }
+
+  const subjectMarks = {};
+
+  subjectMarksCurrentSem.forEach((mark) => {
+    if (!subjectMarks[mark.sname]) {
+      subjectMarks[mark.sname] = [];
+    }
+    subjectMarks[mark.sname].push(mark.marks);
+  });
+
+  // Step 3: Calculate the average for each subject
+  let subjectAverages = {};
+
+  for (const subject in subjectMarks) {
+    const marks = subjectMarks[subject];
+    const average = marks.reduce((sum, mark) => sum + mark, 0) / marks.length;
+    subjectAverages[subject] = average;
+  }
+  const semester = (year - 1) * 2 + semno;
+
+  let formattedSubjectNames = {};
+
+  for (const subject of Object.keys(subjectAverages)) {
+    const actualSubName = findSubject(subject);
+    if (actualSubName) {
+      const key = `${actualSubName}_mark`;
+      formattedSubjectNames[key] = subjectAverages[subject];
+    }
+  }
+
+  formattedSubjectNames.semester = semester;
+  const laggingSubjectsPromise = await fetch(
+    'http://localhost:5000/predict_lagging_subjects',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formattedSubjectNames),
+    }
+  );
+
+  if (!laggingSubjectsPromise.ok) {
+    return next(new AppError('Something went wrong at Flask', 500));
+  }
+
+  const laggingSubjectsResult = await laggingSubjectsPromise.json();
+
+  res.status(200).json({
+    status: 'success',
+    results: laggingSubjectsResult.lagging_subjects.length,
+    data: {
+      lagging_subjects: laggingSubjectsResult.lagging_subjects,
+    },
   });
 });

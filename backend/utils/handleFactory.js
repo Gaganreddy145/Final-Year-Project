@@ -64,10 +64,8 @@ exports.protectFactory = (Model) =>
 
     const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
     // console.log(decoded);
-
     const findUser = await Model.findById(decoded.id);
     // console.log(findUser);
-
     if (!findUser) return next(new AppError('User not found', 401));
 
     if (findUser.changedPWDAfter(decoded.iat)) {
@@ -75,7 +73,7 @@ exports.protectFactory = (Model) =>
         new AppError('User recently changed password.Plz login again', 401)
       );
     }
-
+  
     req.user = findUser;
     next();
   });

@@ -30,6 +30,10 @@ model_higher_grade2 = models_dict_2['model_higher_grade2']
 model_higher_pass2 = models_dict_2['model_higher_pass2']
 kmeans2 = models_dict_2['kmeans2']
 
+
+with open('subject_marks_model.pkl', 'rb') as f:
+    subject_models = pickle.load(f)
+
 @app.route("/")
 def home():
     # A simple JSON welcome message for the API root.
@@ -189,6 +193,45 @@ def predict_students():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+
+@app.route("/predict_lagging_subjects", methods=["POST"])
+def predict_lagging_subjects():
+    """
+    Predicts the subjects in which a student is lagging based on subject-wise marks.
+    Expects a JSON payload with:
+      - "semester": The semester number (e.g., 1, 2, ..., 8)
+      - For each expected feature (e.g., for semester 1: "Math1_mark", "Physics1_mark", etc.)
+    Returns a JSON with the list of subjects where the student is predicted to be lagging.
+    """
+    try:
+        data = request.get_json(force=True)
+        semester = int(data.get("semester", 0))
+        if semester not in subject_models:
+            return jsonify({"error": "Invalid semester provided or model not available for this semester"}), 400
+        
+        model_data = subject_models[semester]
+        feature_columns = model_data["feature_columns"]
+        target_columns = model_data["target_columns"]
+        model = model_data["model"]
+        
+        input_data = {}
+        for feat in feature_columns:
+            val = data.get(feat)
+            if val is None or val == "":
+                return jsonify({"error": f"Missing value for '{feat}'"}), 400
+            try:
+                input_data[feat] = float(val)
+            except ValueError:
+                return jsonify({"error": f"Invalid value for '{feat}'; must be numeric."}), 400
+        
+        input_df = pd.DataFrame([input_data])
+        prediction = model.predict(input_df)
+        # Remove 'lag_' prefix from target names for clarity.
+        lagging_subjects = [target.replace("lag_", "") for target, pred in zip(target_columns, prediction[0]) if pred == 1]
+        return jsonify({"lagging_subjects": lagging_subjects})
+    
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
     app.run(debug=True)

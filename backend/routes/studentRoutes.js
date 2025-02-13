@@ -13,6 +13,7 @@ const {
   postPrediction,
   postClassPrediction,
   postEmail,
+  getSubjectsLagPrediction,
 } = require('./../controllers/studentController');
 
 const {
@@ -23,6 +24,13 @@ const {
 } = require('./../controllers/authController');
 const { getMe } = require('../controllers/studentController');
 const router = express.Router();
+
+router.get(
+  '/subjects-lag',
+  protectStudent,
+  restrictTo('student'),
+  getSubjectsLagPrediction
+);
 
 router.post('/login', loginStudent);
 router.get('/find/me', protectStudent, getMe);
@@ -54,6 +62,6 @@ router.post(
   postClassPrediction
 );
 
-router.post('/sendemail',postEmail);
+router.post('/sendemail', protect, restrictTo('teacher'), postEmail);
 
 module.exports = router;

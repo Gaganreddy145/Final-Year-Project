@@ -5,7 +5,13 @@ const Student = require('./../models/studentModel');
 const mongoose = require('mongoose');
 
 exports.getAllMarks = catchAsync(async (req, res, next) => {
-  const midMarks = await Mid.find();
+  let query;
+  const filterOpts = { ...req.query };
+  if (filterOpts.semno) filterOpts.semno = filterOpts.semno * 1;
+  if (filterOpts.year) filterOpts.year = filterOpts.year * 1;
+
+  query = Mid.find(filterOpts);
+  const midMarks = await query;
 
   res.status(200).json({
     status: 'success',
