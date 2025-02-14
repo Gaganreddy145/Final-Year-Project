@@ -37,6 +37,7 @@ import StudentPrediction, {
 } from "./routes/StudentPrediction";
 import ClassOverviewPrediction,{action as classPredictionAction} from "./routes/ClassOverviewPrediction";
 import ErrorPage from "./components/ErrorPage";
+import LaggingSubjects from "./routes/LaggingSubjects";
 
 function App() {
   const router = createBrowserRouter([
@@ -119,6 +120,10 @@ function App() {
           path:"teacher-predict",
           element:<ClassOverviewPrediction />,
           action:classPredictionAction
+        },
+        {
+          path:"lagging-subjects",
+          element:<LaggingSubjects />
         },
         {
           path: "logout",

@@ -7,6 +7,7 @@ const bcrypt = require('bcryptjs');
 const { getMeFactory } = require('../utils/handleFactory');
 const sendEmail = require('../utils/email');
 const findSubject = require('../utils/matchSubject');
+const axios = require('axios');
 
 exports.getMe = getMeFactory(Student);
 
@@ -526,3 +527,61 @@ exports.getSubjectsLagPrediction = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+exports.postSubjectsForCourseRecommendations = async (req, res) => {
+  const subjects = req.body.subjects;
+  const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
+
+  if (!subjects || !Array.isArray(subjects)) {
+    return res
+      .status(400)
+      .json({ error: "Request body must include a 'subjects' array" });
+  }
+
+  let results = {};
+
+  try {
+    // Loop over each subject in the array
+    for (const subject of subjects) {
+      // Build the query to focus on tutorials for B.Tech (engineering) students
+      const query = `${subject} tutorial for btech`;
+
+      const response = await axios.get(
+        'https://www.googleapis.com/youtube/v3/search',
+        {
+          params: {
+            part: 'snippet',
+            q: query,
+            key: YOUTUBE_API_KEY,
+            maxResults: 5, // Adjust the number of results as needed
+            type: 'video',
+          },
+        }
+      );
+
+      // Map the API response to only the needed video details
+      const videos = response.data.items.map((item) => ({
+        title: item.snippet.title,
+        videoId: item.id.videoId,
+        thumbnail: item.snippet.thumbnails.medium.url,
+        videoUrl: `https://www.youtube.com/watch?v=${item.id.videoId}`,
+      }));
+
+      // Save the videos under the subject name
+      results[subject] = videos;
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        results,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      status: 'fail',
+      message: 'Failed to fetch tutorials',
+    });
+  }
+};

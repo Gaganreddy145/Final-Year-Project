@@ -14,6 +14,7 @@ const {
   postClassPrediction,
   postEmail,
   getSubjectsLagPrediction,
+  postSubjectsForCourseRecommendations,
 } = require('./../controllers/studentController');
 
 const {
@@ -31,6 +32,7 @@ router.get(
   restrictTo('student'),
   getSubjectsLagPrediction
 );
+router.post('/course-recommendations', postSubjectsForCourseRecommendations);
 
 router.post('/login', loginStudent);
 router.get('/find/me', protectStudent, getMe);
