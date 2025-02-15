@@ -1,7 +1,7 @@
 import React from "react";
 import getRole from "../utils/decodeRole";
 import TeacherDashBoard from "../components/TeacherDashBoard";
-import StudentDashBoard from "./StudentDashBoard";
+import StudentDashBoard from "../components/StudentDashBoard";
 
 function Home() {
   const role = getRole();

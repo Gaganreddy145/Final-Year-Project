@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { getToken } from "../utils/tokenHandler";
 import { json, Link, redirect, useLoaderData } from "react-router-dom";
 import { StudentContext } from "../student/StudentContext";
+import styles from "./MyMarks.module.css";
 
 function MyMarks() {
   const {
@@ -14,24 +15,20 @@ function MyMarks() {
     handleSetData(student);
   }, [student]);
 
-  // console.log(studentData);
-
   const years = [];
   for (let i = 1; i <= studentData.year; i++) years.push(i);
 
   return (
-    <div>
-      <h1>MyMarks</h1>
-      <p>{studentData.name}</p>
-      <ul>
-        {years.map((num) => {
-          return (
-            <li key={num}>
-              <Link to={`/marks/${num}`}>Year {num}</Link>
-            </li>
-          );
-        })}
-      </ul>
+    <div className={styles.pageContainer}>
+      <h1 className={styles.title}>My Marks</h1>
+      <p className={styles.studentName}>{studentData.name}</p>
+      <div className={styles.cardsContainer}>
+        {years.map((num) => (
+          <Link to={`/marks/${num}`} key={num} className={styles.card}>
+            <span className={styles.cardText}>Year {num}</span>
+          </Link>
+        ))}
+      </div>
     </div>
   );
 }
@@ -55,4 +52,5 @@ export const loader = async () => {
   const result = await response.json();
   return result;
 };
+
 export default MyMarks;
