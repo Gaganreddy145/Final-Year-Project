@@ -49,6 +49,23 @@ exports.getMeFactory = (Model) =>
     });
   });
 
+exports.updateMeFactory = (Model) =>
+  catchAsync(async (req, res, next) => {
+    const user = await Model.findByIdAndUpdate(req.user.id, req.body, {
+      runValidators: true,
+      new: true,
+    });
+
+    if (!user) return next(new AppError('No such user', 404));
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        user,
+      },
+    });
+  });
+
 exports.protectFactory = (Model) =>
   catchAsync(async (req, res, next) => {
     let token;
@@ -73,7 +90,7 @@ exports.protectFactory = (Model) =>
         new AppError('User recently changed password.Plz login again', 401)
       );
     }
-  
+
     req.user = findUser;
     next();
   });

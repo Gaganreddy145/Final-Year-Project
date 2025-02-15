@@ -17,6 +17,9 @@ function StudentDashBoard() {
           <Link to="/predict" className={styles.card}>
             Prediction
           </Link>
+          <Link to="/my-student-details" className={styles.card}>
+            My Details
+          </Link>
         </nav>
 
         {token && (

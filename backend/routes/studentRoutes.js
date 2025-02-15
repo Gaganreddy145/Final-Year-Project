@@ -23,7 +23,7 @@ const {
   loginStudent,
   protectStudent,
 } = require('./../controllers/authController');
-const { getMe } = require('../controllers/studentController');
+const { getMe, updateMe } = require('../controllers/studentController');
 const router = express.Router();
 
 router.get(
@@ -35,7 +35,10 @@ router.get(
 router.post('/course-recommendations', postSubjectsForCourseRecommendations);
 
 router.post('/login', loginStudent);
-router.get('/find/me', protectStudent, getMe);
+router
+  .route('/find/me')
+  .get(protectStudent, getMe)
+  .patch(protectStudent, updateMe);
 
 router.post('/promote', protect, restrictTo('admin'), promoteStudents);
 router.get('/fi/findSections/:year', protect, findSection);

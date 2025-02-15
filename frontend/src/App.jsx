@@ -6,9 +6,7 @@ import {
   action as loginAction,
   loader as checkLoginLoader,
 } from "./routes/Login";
-import StudentDetails from "./routes/StudentDetails";
 import MyDetails, { loader as myDetailsLoader } from "./routes/MyDetails";
-import YearDetails, { loader as sectionsLoader } from "./routes/YearDetails";
 import Details from "./routes/Details";
 import StuDetails, { loader as studentLoader } from "./routes/StuDetails";
 import Student, { loader as specificStudent } from "./routes/Student";
@@ -35,9 +33,12 @@ import MyMidMarksSpecificYear from "./routes/MyMidMarksSpecificYear";
 import StudentPrediction, {
   action as studentPredictionAction,
 } from "./routes/StudentPrediction";
-import ClassOverviewPrediction,{action as classPredictionAction} from "./routes/ClassOverviewPrediction";
+import ClassOverviewPrediction, {
+  action as classPredictionAction,
+} from "./routes/ClassOverviewPrediction";
 import ErrorPage from "./components/ErrorPage";
 import LaggingSubjects from "./routes/LaggingSubjects";
+import StudentDetail,{loader as studentDetailLoader} from "./routes/StudentDetail";
 
 function App() {
   const router = createBrowserRouter([
@@ -50,7 +51,7 @@ function App() {
     {
       path: "/",
       element: <RootLayout />,
-      errorElement:<ErrorPage />,
+      errorElement: <ErrorPage />,
       id: "root",
       loader: getToken,
       children: [
@@ -64,6 +65,11 @@ function App() {
           path: "student-details/:id",
           element: <Student />,
           loader: specificStudent,
+        },
+        {
+          path: "my-student-details",
+          element: <StudentDetail />,
+          loader:studentDetailLoader
         },
         {
           path: "add-user",
@@ -117,13 +123,13 @@ function App() {
           action: studentPredictionAction,
         },
         {
-          path:"teacher-predict",
-          element:<ClassOverviewPrediction />,
-          action:classPredictionAction
+          path: "teacher-predict",
+          element: <ClassOverviewPrediction />,
+          action: classPredictionAction,
         },
         {
-          path:"lagging-subjects",
-          element:<LaggingSubjects />
+          path: "lagging-subjects",
+          element: <LaggingSubjects />,
         },
         {
           path: "logout",

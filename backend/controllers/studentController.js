@@ -4,12 +4,14 @@ const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 // const Mid = require('../models/midMarksModel');
 const bcrypt = require('bcryptjs');
-const { getMeFactory } = require('../utils/handleFactory');
+const { getMeFactory, updateMeFactory } = require('../utils/handleFactory');
 const sendEmail = require('../utils/email');
 const findSubject = require('../utils/matchSubject');
 const axios = require('axios');
 
 exports.getMe = getMeFactory(Student);
+
+exports.updateMe = updateMeFactory(Student);
 
 exports.getAllStudents = catchAsync(async (req, res, next) => {
   let query;

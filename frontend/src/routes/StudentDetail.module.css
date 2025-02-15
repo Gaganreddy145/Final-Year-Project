@@ -1,0 +1,125 @@
+/* Overall container styling */
+.container {
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  min-height: 100vh;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Profile card styling */
+.profileCard {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 900px;
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* Photo section */
+.photoSection {
+  flex: 1 1 300px;
+  min-width: 300px;
+  background-color: #007bff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.profilePhoto {
+  border-radius: 50%;
+  width: 220px;
+  height: 220px;
+  object-fit: cover;
+  border: 5px solid #ffffff;
+}
+
+/* Information section */
+.infoSection {
+  flex: 2 1 400px;
+  padding: 40px 30px;
+  background-color: #ffffff;
+  color: #343a40;
+}
+
+.infoRow {
+  font-size: 18px;
+  color: #495057;
+  margin: 12px 0;
+  line-height: 1.6;
+}
+
+.infoRow strong {
+  color: #343a40;
+  margin-right: 8px;
+}
+
+.infoRow input {
+  padding: 10px;
+  margin-left: 8px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.infoRow input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+  outline: none;
+}
+
+/* Error message styling */
+.error {
+  color: red;
+  font-size: 14px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+/* Button container styling */
+.buttonContainer {
+  margin-top: 20px;
+}
+
+.buttonContainer button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.buttonContainer button:hover {
+  background: #0056b3;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .profileCard {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .photoSection,
+  .infoSection {
+    flex: 1 1 100%;
+    min-width: unset;
+  }
+
+  .photoSection {
+    padding: 20px;
+  }
+
+  .infoSection {
+    padding: 20px;
+  }
+}
