@@ -1,24 +1,34 @@
 import React from "react";
-import { Form, redirect, useActionData, Link, useSearchParams } from "react-router-dom";
+import {
+  Form,
+  redirect,
+  useActionData,
+  Link,
+  useSearchParams,
+  useNavigation,
+} from "react-router-dom";
 import { getToken } from "../utils/tokenHandler";
-import "./Login.css";
+import styles from "./Login.module.css";
 
 function Login() {
   const data = useActionData();
   const [searchParams] = useSearchParams({ mode: "adteach" });
   const isStudent = searchParams.get("mode") !== "adteach";
+  const navigation = useNavigation();
 
   return (
-    <div className="login-container">
-      <div className="login-card">
+    <div className={styles.loginContainer}>
+      <div className={styles.loginCard}>
         <h2>Login</h2>
-        {data && data.message && <p className="error-message">{data.message}</p>}
-        <Form method="POST" className="login-form">
-          <div className="form-group">
+        {data && data.message && (
+          <p className={styles.errorMessage}>{data.message}</p>
+        )}
+        <Form method="POST" className={styles.loginForm}>
+          <div className={styles.formGroup}>
             <label htmlFor="email">Email:</label>
             <input type="email" name="email" id="email" required />
           </div>
-          <div className="form-group">
+          <div className={styles.formGroup}>
             <label htmlFor="password">Password:</label>
             <input type="password" name="password" id="password" required />
           </div>
@@ -28,7 +38,7 @@ function Login() {
               style={{
                 float: "right",
                 marginTop: "10px",
-                marginBottom:"10px",
+                marginBottom: "10px",
                 textDecoration: "none",
                 color: "#007BFF",
               }}
@@ -36,8 +46,12 @@ function Login() {
               {isStudent ? "Admin/Teacher" : "Student"} Login
             </Link>
           </div>
-          <button type="submit" className="login-button">
-            Login
+          <button
+            type="submit"
+            className={styles.loginButton}
+            disabled={navigation.state === "submitting"}
+          >
+            {navigation.state === "submitting" ? "Checking..." : "Login"}
           </button>
         </Form>
       </div>

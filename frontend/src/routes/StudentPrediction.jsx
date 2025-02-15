@@ -1,10 +1,18 @@
 import React from "react";
-import { Form, json, redirect, useActionData, Link } from "react-router-dom";
+import {
+  Form,
+  json,
+  redirect,
+  useActionData,
+  Link,
+  useNavigation,
+} from "react-router-dom";
 import "./StudentPrediction.css";
 import { getToken } from "../utils/tokenHandler";
 
 function StudentPrediction() {
   const data = useActionData();
+  const navigation = useNavigation();
 
   return (
     <div>
@@ -170,7 +178,14 @@ function StudentPrediction() {
           </div>
 
           <div className="form-group">
-            <input type="submit" value="Predict" className="submit-btn" />
+            <input
+              type="submit"
+              value={
+                navigation.state === "submitting" ? "Predicting..." : "Predict"
+              }
+              className="submit-btn"
+              disabled={navigation.state === "submitting"}
+            />
           </div>
         </Form>
       </div>

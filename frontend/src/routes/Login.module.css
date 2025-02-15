@@ -1,5 +1,5 @@
 /* Container centers the login card */
-.login-container {
+.loginContainer {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,7 +9,7 @@
 }
 
 /* Card styling for the login form */
-.login-card {
+.loginCard {
   background: #ffffff;
   padding: 40px 30px;
   border-radius: 12px;
@@ -19,27 +19,27 @@
 }
 
 /* Form heading */
-.login-card h2 {
+.loginCard h2 {
   margin-bottom: 20px;
   color: #343a40;
   font-size: 28px;
 }
 
 /* Error message styling */
-.error-message {
+.errorMessage {
   color: #dc3545;
   margin-bottom: 15px;
   font-weight: bold;
 }
 
 /* Form styling */
-.login-form {
+.loginForm {
   display: flex;
   flex-direction: column;
 }
 
 /* Form group to group label and input */
-.form-group {
+.formGroup {
   display: flex;
   flex-direction: column;
   margin-bottom: 15px;
@@ -47,14 +47,14 @@
 }
 
 /* Label styling */
-.form-group label {
+.formGroup label {
   margin-bottom: 5px;
   font-size: 16px;
   color: #495057;
 }
 
 /* Input styling */
-.form-group input {
+.formGroup input {
   padding: 10px;
   font-size: 16px;
   border: 2px solid #ddd;
@@ -63,14 +63,14 @@
 }
 
 /* Input focus effect */
-.form-group input:focus {
+.formGroup input:focus {
   border-color: #007bff;
   box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
   outline: none;
 }
 
 /* Button styling */
-.login-button {
+.loginButton {
   background: #007bff;
   color: #fff;
   padding: 12px;
@@ -82,6 +82,6 @@
   margin-top: 10px;
 }
 
-.login-button:hover {
+.loginButton:hover {
   background: #0056b3;
 }
