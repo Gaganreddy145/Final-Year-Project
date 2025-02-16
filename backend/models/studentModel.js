@@ -98,15 +98,21 @@ studentSchema.virtual('midmarks', {
   localField: '_id',
 });
 
-// studentSchema.pre('save', async function (next) {
-//   if (!this.isModified('password')) return next();
+studentSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) return next();
 
-//   this.password = await bcrypt.hash(this.password, 10);
-//   next();
-// });
+  this.password = await bcrypt.hash(this.password, 10);
+  next();
+});
 
 studentSchema.pre(/^find/, function (next) {
   this.find({ status: { $ne: 'completed' } });
+  next();
+});
+
+studentSchema.pre('save', function (next) {
+  if (!this.isModified('password') || this.isNew) return next();
+  this.changedpasswordAt = Date.now() - 1000;
   next();
 });
 

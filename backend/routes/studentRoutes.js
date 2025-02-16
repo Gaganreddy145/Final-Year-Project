@@ -22,6 +22,7 @@ const {
   restrictTo,
   loginStudent,
   protectStudent,
+  updateMyPassword,
 } = require('./../controllers/authController');
 const { getMe, updateMe } = require('../controllers/studentController');
 const router = express.Router();
@@ -35,6 +36,7 @@ router.get(
 router.post('/course-recommendations', postSubjectsForCourseRecommendations);
 
 router.post('/login', loginStudent);
+router.patch('/updateMyPassword', protectStudent, updateMyPassword);
 router
   .route('/find/me')
   .get(protectStudent, getMe)

@@ -64,3 +64,28 @@ exports.restrictTo = (...roles) => {
     next();
   };
 };
+
+exports.updateMyPassword = catchAsync(async (req, res, next) => {
+  if(!req.body.passwordCurrent) return next(new AppError("Current password field is missing",400));
+  if(!req.body.password) return next(new AppError("Password field is missing",400));
+  const student = await Student.findById(req.user.id).select('+password');
+  if (!student) return next(new AppError('Student not found', 404));
+  if (
+    !(await student.comparePasswords(
+      req.body.passwordCurrent,
+      student.password
+    ))
+  )
+    return next(new AppError('Current password is wrong', 400));
+  student.password = req.body.password;
+  await student.save();
+  const token = signToken(req.user.id, student.role);
+  student.password = undefined;
+  res.status(200).json({
+    status: 'success',
+    token,
+    data: {
+      student,
+    },
+  });
+});

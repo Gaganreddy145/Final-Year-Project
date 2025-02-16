@@ -246,8 +246,7 @@ exports.updateAttendances = catchAsync(async (req, res, next) => {
     if (!student)
       return next(new AppError(`No such student with rollno ${rollno}`, 404));
     if (
-      student.year * 2 <= student.attendance.length ||
-      student.currentSem * student.year <= student.attendance.length
+      !(student.attendance.length < (student.year - 1) * 2 + student.currentSem)
     ) {
       return next(
         new AppError(

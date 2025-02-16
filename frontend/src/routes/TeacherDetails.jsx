@@ -39,7 +39,7 @@ function TeacherDetails() {
   return (
     <div className="teacher-main-content">
       <h1 className="teacher-page-title">Teacher Details</h1>
-      <div className="teacher-search-container">
+      {/* <div className="teacher-search-container">
         <input
           type="text"
           value={searchValue}
@@ -53,7 +53,7 @@ function TeacherDetails() {
         <button onClick={handleSearch} className="teacher-search-button">
           Search
         </button>
-      </div>
+      </div> */}
       {alertMsg && <p className="teacher-alert-msg">{alertMsg}</p>}
       <div className="teacher-card-grid">
         {teachers.map((teacher) => {
