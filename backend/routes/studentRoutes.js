@@ -36,7 +36,7 @@ router.get(
 router.post('/course-recommendations', postSubjectsForCourseRecommendations);
 
 router.post('/login', loginStudent);
-router.patch('/updateMyPassword', protectStudent, updateMyPassword);
+router.patch('/updateMyPassword', protectStudent, restrictTo('student'),updateMyPassword);
 router
   .route('/find/me')
   .get(protectStudent, getMe)

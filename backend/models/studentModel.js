@@ -123,7 +123,6 @@ studentSchema.methods.comparePasswords = async (originalPass, hashPass) => {
 studentSchema.methods.changedPWDAfter = function (JWTtimestamp) {
   if (this.changedpasswordAt) {
     const changedTS = parseInt(this.changedpasswordAt.getTime() / 1000, 10);
-    console.log(changedTS > JWTtimestamp);
     return changedTS > JWTtimestamp;
   }
   return false;

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { getToken } from "../utils/tokenHandler";
-import { redirect, json, useLoaderData } from "react-router-dom";
+import { redirect, json, useLoaderData, useNavigate } from "react-router-dom";
 import styles from "./StudentDetail.module.css";
 import professor from "./../../../custom image.png";
 import getURL from "../utils/getURLForNode";
@@ -18,6 +18,12 @@ function StudentDetail() {
     email: user.email,
   });
   const [isError, setIsError] = useState({ status: false, msg: "" });
+  const [isChanging, setIsChanging] = useState(false);
+  const [passValues, setPassValues] = useState({
+    passwordCurrent: "",
+    password: "",
+  });
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setValues((prev) => ({
@@ -26,6 +32,42 @@ function StudentDetail() {
     }));
   };
 
+  const handlePassChange = (e) => {
+    setPassValues((prev) => {
+      return {
+        ...prev,
+        [e.target.name]: e.target.value,
+      };
+    });
+  };
+
+  const handlePassSubmit = async () => {
+
+    const token = getToken();
+    if (!token) return navigate("/login");
+    try {
+      const response = await fetch(`${getURL()}students/updateMyPassword`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(passValues),
+      });
+
+      if (!response.ok) {
+        const err = await response.json();
+        throw new Error(err.message || "Something went wrong!!!");
+      }
+      localStorage.removeItem("token-student");
+      setIsChanging(false);
+      alert("Successfully password has updated...")
+      return navigate("/login");
+    } catch (error) {
+      alert(error.message || "Something went wrong!!!");
+      // setIsChanging(false);
+    }
+  };
   const handleSubmit = async () => {
     const token = getToken();
     setIsError({ status: false, msg: "" });
@@ -122,6 +164,37 @@ function StudentDetail() {
               <button onClick={handleSubmit}>Submit</button>
             )}
           </div>
+          <div className={styles.buttonContainer}>
+            {!isChanging ? (
+              <button onClick={() => setIsChanging(true)}>
+                Change Password
+              </button>
+            ) : (
+              <button onClick={handlePassSubmit}>Submit</button>
+            )}
+          </div>
+          {isChanging && (
+            <div className={styles.infoRow}>
+              <strong>Current Password:</strong>
+              <input
+                type="password"
+                name="passwordCurrent"
+                value={passValues.passwordCurrent}
+                onChange={handlePassChange}
+              />
+            </div>
+          )}
+          {isChanging && (
+            <div className={styles.infoRow}>
+              <strong>New Password:</strong>
+              <input
+                type="password"
+                name="password"
+                value={passValues.password}
+                onChange={handlePassChange}
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>
