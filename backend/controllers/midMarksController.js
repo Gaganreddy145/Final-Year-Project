@@ -99,7 +99,7 @@ exports.postMidMarks = catchAsync(async (req, res, next) => {
 
     res.status(400).json({
       status: 'fail',
-      message: 'Error inserting students',
+      message: error.message || 'Error inserting marks',
       error: error.message,
     });
   }
