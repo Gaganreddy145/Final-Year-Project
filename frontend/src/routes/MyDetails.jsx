@@ -27,6 +27,7 @@ function MyDetails() {
     passwordCurrent: "",
     password: "",
   });
+  const [isLoading,setIsLoading] = useState(false);
   const role = getRole();
 
   const handleChange = (e) => {
@@ -78,7 +79,7 @@ function MyDetails() {
   const handleSubmit = async () => {
     const token = getToken();
     setIsError({ status: false, msg: "" });
-
+    setIsLoading(true);
     try {
       const response = await fetch("http://localhost:3000/api/users/find/me", {
         method: "PATCH",
@@ -96,9 +97,11 @@ function MyDetails() {
       const result = await response.json();
       // console.log(result.data);
       setUserSt(result.data.user);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
       setUserSt(userSt);
+      setIsLoading(false);
       setIsError({ status: true, msg: error.message });
     }
     setValues({
@@ -220,12 +223,13 @@ function MyDetails() {
               </button>
             ) : (
               <button
+               disabled={isLoading}
                 onClick={() => {
                   setIsEditing(false);
                   handleSubmit();
                 }}
               >
-                Submit
+               {isLoading ? "Submitting..." : " Submit"}
               </button>
             )}
           </div>

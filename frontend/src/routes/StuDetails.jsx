@@ -32,6 +32,7 @@ function StuDetails() {
     students.length > 0 && selectedStudents.length === students.length;
 
   const role = getRole();
+  const [isLoading, setIsLoading] = useState(false);
 
   // Whenever filters change, fetch the filtered student data
   useEffect(() => {
@@ -130,6 +131,7 @@ function StuDetails() {
     }
 
     try {
+      setIsLoading(true);
       const response = await fetch(
         "http://localhost:3000/api/students/promote",
         {
@@ -148,7 +150,9 @@ function StuDetails() {
         setMessage("Promotion failed. Please try again.");
         console.error("Promotion failed:", response.statusText);
       }
+      setIsLoading(false);
     } catch (error) {
+      setIsLoading(false);
       console.error("Error promoting students:", error);
       setMessage("An error occurred during promotion.");
     }
@@ -287,6 +291,7 @@ function StuDetails() {
             {role === "admin" && (
               <button
                 onClick={handlePromote}
+                disabled={isLoading}
                 style={{
                   padding: "8px 16px",
                   backgroundColor: "green",
@@ -296,7 +301,7 @@ function StuDetails() {
                   cursor: "pointer",
                 }}
               >
-                Promote
+                {isLoading ? "Promoting..." : "Promote"}
               </button>
             )}
           </div>

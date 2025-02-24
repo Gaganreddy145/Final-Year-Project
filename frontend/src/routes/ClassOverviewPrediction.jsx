@@ -5,6 +5,7 @@ import {
   redirect,
   useActionData,
   useNavigate,
+  useNavigation,
 } from "react-router-dom";
 import { getToken } from "../utils/tokenHandler";
 import { Pie } from "react-chartjs-2";
@@ -18,6 +19,7 @@ function ClassOverviewPrediction() {
   const predictedData = useActionData();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const navigation = useNavigation();
 
   // Prepare performance summary chart data if exists
   let chartData = null;
@@ -143,7 +145,7 @@ function ClassOverviewPrediction() {
           </div>
 
           <div className={styles.formGroup}>
-            <input type="submit" value="Predict" disabled={isLoading}/>
+            <input type="submit" value={navigation.state === "submitting" ? "Predicting..." :"Predict"} disabled={isLoading || navigation.state === "submitting"}/>
           </div>
         </Form>
       </div>

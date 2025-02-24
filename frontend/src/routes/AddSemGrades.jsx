@@ -10,6 +10,7 @@ const initialStudent = {
 function AddSemGrades() {
   const [students, setStudents] = useState([initialStudent]);
   const [message, setMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   // Update the value for a given student row and field
   const handleChange = (index, field, value) => {
@@ -39,6 +40,7 @@ function AddSemGrades() {
   // Submit all student rows to the backend
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const semgrades = students.map((sem) => {
       const { rollno, grade } = sem;
       return {
@@ -59,7 +61,7 @@ function AddSemGrades() {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ grades:semgrades}),
+          body: JSON.stringify({ grades: semgrades }),
         }
       );
 
@@ -70,7 +72,9 @@ function AddSemGrades() {
         const error = await response.json();
         setMessage("Error: " + (error.message || "Failed to add grades."));
       }
+      setIsLoading(false);
     } catch (error) {
+      setIsLoading(false);
       console.error("Error submitting grades:", error);
       setMessage("An error occurred while adding grades.");
     }
@@ -136,7 +140,7 @@ function AddSemGrades() {
             Add Row
           </button>
           <button type="submit" style={styles.submitButton}>
-            Submit All Grades
+            {isLoading ? "Submitting..." : " Submit All Grades"}
           </button>
         </div>
       </form>

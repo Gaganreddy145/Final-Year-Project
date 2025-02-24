@@ -1,13 +1,10 @@
-import { Outlet } from "react-router-dom";
-
-import React from 'react'
+import { Outlet, useNavigation } from "react-router-dom";
+import Loader from "../components/Loader";
+import React from "react";
 
 function RootLayout() {
-  return (
-    <div>
-        <Outlet />
-    </div>
-  )
+  const navigate = useNavigation();
+  return <div>{navigate.state === "loading" ? <Loader /> : <Outlet />}</div>;
 }
 
-export default RootLayout
+export default RootLayout;

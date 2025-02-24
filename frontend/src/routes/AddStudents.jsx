@@ -15,6 +15,7 @@ function AddStudentsExcel() {
   const [students, setStudents] = useState([initialStudent]);
   const [message, setMessage] = useState("");
   const [errors, setErrors] = useState({});
+  const [isLoading,setIsLoading] = useState(false);
 
   // Update the value for a given student row and field
   const handleChange = (index, field, value) => {
@@ -69,6 +70,7 @@ function AddStudentsExcel() {
     const token = getToken();
 
     try {
+      setIsLoading(true);
       const response = await fetch("http://localhost:3000/api/students/", {
         method: "POST",
         headers: {
@@ -85,7 +87,9 @@ function AddStudentsExcel() {
         const error = await response.json();
         setMessage("Error: " + (error.message || "Failed to add students."));
       }
+      setIsLoading(false);
     } catch (error) {
+      setIsLoading(false);
       console.error("Error submitting students:", error);
       setMessage("An error occurred while adding students.");
     }
@@ -205,9 +209,9 @@ function AddStudentsExcel() {
           <button
             type="submit"
             style={styles.submitButton}
-            disabled={Object.keys(errors).length > 0}
+            disabled={Object.keys(errors).length > 0 || isLoading}
           >
-            Submit All Students
+            {isLoading ? "Submitting..." : "Submit All Students"}
           </button>
         </div>
       </form>
