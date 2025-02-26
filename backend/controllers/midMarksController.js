@@ -66,6 +66,13 @@ exports.postMidMarks = catchAsync(async (req, res, next) => {
     if (!student) {
       return next(new AppError('No such rollnumber', 404));
     }
+    if (student.currentSem === 2 && student.year === 4)
+      return next(
+        new AppError(
+          `Student is in 8th semester, so we can't insert marks!!!`,
+          400
+        )
+      );
     const newObjData = {
       ...obj,
       sid: student._id,
