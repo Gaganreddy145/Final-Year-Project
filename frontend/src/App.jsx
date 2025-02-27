@@ -7,7 +7,6 @@ import {
   loader as checkLoginLoader,
 } from "./routes/Login";
 import MyDetails, { loader as myDetailsLoader } from "./routes/MyDetails";
-import Details from "./routes/Details";
 import StuDetails, { loader as studentLoader } from "./routes/StuDetails";
 import Student, { loader as specificStudent } from "./routes/Student";
 import { logoutAction } from "./routes/logout";
@@ -38,7 +37,9 @@ import ClassOverviewPrediction, {
 } from "./routes/ClassOverviewPrediction";
 import ErrorPage from "./components/ErrorPage";
 import LaggingSubjects from "./routes/LaggingSubjects";
-import StudentDetail,{loader as studentDetailLoader} from "./routes/StudentDetail";
+import StudentDetail, {
+  loader as studentDetailLoader,
+} from "./routes/StudentDetail";
 
 function App() {
   const router = createBrowserRouter([
@@ -69,7 +70,7 @@ function App() {
         {
           path: "my-student-details",
           element: <StudentDetail />,
-          loader:studentDetailLoader
+          loader: studentDetailLoader,
         },
         {
           path: "add-user",
@@ -102,10 +103,6 @@ function App() {
           path: "add-attendance",
           element: <AddAttendance />,
           loader: addAttendanceLoader,
-        },
-        {
-          path: "/:details",
-          element: <Details />,
         },
         { path: "my-details", element: <MyDetails />, loader: myDetailsLoader },
         {
