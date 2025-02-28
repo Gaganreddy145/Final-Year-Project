@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getToken } from "../utils/tokenHandler";
-import { redirect, useLoaderData, Link } from "react-router-dom";
+import { redirect, useLoaderData, Link, json } from "react-router-dom";
 import "./StuDetails.css";
 import photos from "./../../../custom image.png";
 import getRole from "../utils/decodeRole";
@@ -350,7 +350,14 @@ function StuDetails() {
 
 export const loader = async () => {
   const token = getToken();
+  const role = getRole();
   if (!token) return redirect("/login");
+  if (role === "student") {
+    throw json(
+      { message: "Student has no access to this route!!!" },
+      { status: 403 }
+    );
+  }
 
   const response = await fetch("http://localhost:3000/api/students/", {
     method: "GET",
